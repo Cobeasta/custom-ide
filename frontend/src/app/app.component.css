@@ -1,19 +1,27 @@
 .container {
   display: grid;
   grid-template-columns: auto 5px 1fr;
-  grid-template-rows: 1fr;
+  grid-template-rows: auto 1fr;
   overflow: hidden;
   width: 100vw;
   height: 100vh;
-  grid-template-areas: "sidebar resizer editor";
+  grid-template-areas: 
+    "toolbar toolbar toolbar"
+    "sidebar resizer editor";
   margin: 0;
   padding: 0;
+}
+.toolbar {
+ grid-area: toolbar;
+ color: var(--color-toolbar);
+ border-bottom: 1px solid var(--color-border);
 }
 /* sidebar/explorer area */
 .sidebar {
   grid-area: sidebar;
-  background-color: 252626;
-  border-right: 1px solid #333;
+  background-color: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+  color: var(--color-text-muted);
   overflow-y: auto;
   font-family: monospace;
 }
@@ -21,7 +29,7 @@
 /* Editor area */
 .editor-area {
   grid-area: editor;
-  background-color: #1e1e1e;
+  background-color: var(--color-bg);
   display: flex;
   flex-direction: column;
   height: 100%;

@@ -1,0 +1,13 @@
+.menu {
+    display: flex;
+    gap: 1rem;
+}
+.button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;;
+}

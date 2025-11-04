@@ -1,0 +1,33 @@
+:host {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: transparent; /* parent sidebar color shows through */
+  color: var(--color-text-muted);
+  font-family: monospace;
+}
+
+/* Root explorer layout */
+.explorer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Header bar */
+.explorer-header {
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  background: transparent;
+  flex-shrink: 0; /* prevent collapsing */
+}
+
+/* Scrollable file list area */
+.explorer-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem 1rem;
+  background: transparent;
+  box-sizing: border-box;
+}

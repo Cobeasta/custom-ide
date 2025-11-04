@@ -1,0 +1,35 @@
+:root {
+  /* ----------  CORE LAYOUT  ---------- */
+  --color-bg: #0D444C;                /* main editor background (deep teal) */
+  --color-surface: #012E34;           /* panels / sidebars / terminals */
+  --color-toolbar: #0a3a42;           /* top toolbar / tabs (navy-indigo tone) */
+  --color-border: #246068;            /* outlines / splitters / dividers */
+
+  /* ----------  TEXT  ---------- */
+  --color-text: #F4F8F5;              /* main text */
+  --color-text-muted: #9CB2B5;        /* subdued / inactive text */
+  --color-text-inverted: #000C0E;     /* text on light or lime backgrounds */
+
+  /* ----------  ACCENTS (VIVID GREENS) ---------- */
+  --color-accent: #2B823A;            /* primary accent (active buttons, highlights) */
+  --color-accent-hover: #0F5F1D;      /* hover / pressed state */
+  --color-accent-contrast: #FFFFFF;   /* readable text on green */
+
+  /* ----------  SECONDARY BLUES (UI CHROME) ---------- */
+  --color-secondary: #2F4073;         /* icons, secondary outlines, tabs */
+  --color-secondary-hover: #061339;   /* hover background for sidebar items */
+  --color-secondary-dark: #020A22;    /* deepest chrome / inactive area */
+
+  /* ----------  TERTIARY (NEUTRAL SUPPORT) ---------- */
+  --color-tertiary: #00410B;          /* success / accent line / OK */
+  --color-tertiary-dark: #002707;     /* shadowed or pressed states */
+
+  /* ----------  STATUS / ALERTS  ---------- */
+  --color-success: #2B823A;           /* success */
+  --color-warning: #A9C562;           /* mild lime contrast */
+  --color-error: #F06060;             /* alert red */
+
+  /* ----------  SHADOWS / DEPTH  ---------- */
+  --shadow-1: 0 1px 3px rgba(0,0,0,0.25);
+  --shadow-2: 0 2px 6px rgba(0,0,0,0.35);
+}
