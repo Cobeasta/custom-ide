@@ -1,0 +1,19 @@
+<div 
+  class="container"
+  (mousemove)="onDrag($event)"
+  (mouseup)="stopDragging()"
+  >
+  <!-- Optional header / toolbar -->
+  <header class="toolbar">
+    <app-toolbar></app-toolbar>
+  </header>
+
+  <!-- Optional sidebar -->
+  <aside class="sidebar" [style.width.px]="sidebarWidth">
+    <app-explorer></app-explorer>
+  </aside>
+  <div class="resizer" (mousedown)="startDragging($event)"></div>"
+  <main class="editor-area">
+    <app-editor></app-editor>
+  </main>
+</div>

@@ -1,0 +1,40 @@
+.container {
+  display: grid;
+  grid-template-columns: auto 5px 1fr;
+  grid-template-rows: 1fr;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  grid-template-areas: "sidebar resizer editor";
+  margin: 0;
+  padding: 0;
+}
+/* sidebar/explorer area */
+.sidebar {
+  grid-area: sidebar;
+  background-color: 252626;
+  border-right: 1px solid #333;
+  overflow-y: auto;
+  font-family: monospace;
+}
+
+/* Editor area */
+.editor-area {
+  grid-area: editor;
+  background-color: #1e1e1e;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.resizer {
+  grid-area: resizer;
+  background-color: #333;
+  cursor: col-resize;
+  width: 5px;
+  user-select: none;
+}
+.resizer:hover {
+  background-color: #555;
+}
