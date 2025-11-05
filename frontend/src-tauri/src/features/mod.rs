@@ -1,6 +1,12 @@
-pub mod explorer;
-pub use explorer::*;
+pub mod explorer {
+    pub mod commands;
+}
+pub mod editor {
+    pub mod commands;
+}
 pub fn register_all<R: tauri::Runtime>(builder: tauri::Builder<R>) -> tauri::Builder<R> {
-    let builder = explorer::register_handlers(builder);
-    builder
+    builder.invoke_handler(tauri::generate_handler![
+        explorer::commands::read_project_dir,
+        editor::commands::open_file,
+    ])
 }

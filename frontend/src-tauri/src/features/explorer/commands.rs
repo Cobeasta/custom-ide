@@ -1,16 +1,28 @@
-use crate::services::file_system::FileSystemService;
-use std::sync::mpsc::channel;
-use tauri::AppHandle;
-use tauri_plugin_dialog::DialogExt;
+use std::fs;
+use std::path::Path;
+use serde::Serialize;
+use tauri::command;
 
-use tauri::Manager;
+#[derive(Serialize)]
+pub struct FileEntry {
+    name: String,
+    path: String,
+    is_dir: bool,
+}
 
-/// Opens a native folder picker dialog and returns the selected path.
-/// Opens a native folder picker dialog and returns the selected path.
+#[command]
+pub fn read_project_dir(path: String) -> Result<Vec<FileEntry>, String> {
+    let mut entries = Vec::new();
 
+    for entry in fs::read_dir(&path).map_err(|e| e.to_string())? {
+        let entry = entry.map_err(|e| e.to_string())?;
+        let file_type = entry.file_type().map_err(|e| e.to_string())?;
+        entries.push(FileEntry {
+            name: entry.file_name().to_string_lossy().into_owned(),
+            path: entry.path().to_string_lossy().into_owned(),
+            is_dir: file_type.is_dir(),
+        });
+    }
 
-/// Lists files in the given folder path.
-#[tauri::command]
-pub fn list_folder_files(path: String) -> Vec<String> {
-    FileSystemService::read_dir(&path).unwrap_or_default()
+    Ok(entries)
 }

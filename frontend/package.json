@@ -18,6 +18,7 @@
     "@angular/router": "^20.1.4",
     "@tauri-apps/api": "^2",
     "@tauri-apps/plugin-dialog": "^2.4.2",
+    "@tauri-apps/plugin-fs": "^2.4.4",
     "@tauri-apps/plugin-opener": "^2",
     "monaco-editor": "^0.54.0",
     "rxjs": "~7.8.2",

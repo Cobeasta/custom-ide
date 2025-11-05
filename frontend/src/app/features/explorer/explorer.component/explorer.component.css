@@ -31,3 +31,38 @@
   background: transparent;
   box-sizing: border-box;
 }
+
+.node {
+  display: block;
+  position: relative;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  font-family: monospace;
+  color: var(--color-text-muted);
+  cursor: default;
+  user-select: none;
+}
+.node-header {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: 4px;
+  padding: 2px 4px;
+  transition: background 0.1s ease;
+  cursor: pointer;
+}
+.icon {
+  text-align: center;
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+.folder-icon {
+  width: 1rem;
+  flex-shrink: 0;
+  margin-right: 4px;
+}
+.node-children {
+  border-left: 1px solid rgba(255, 255, 255, 0.05);
+  margin-left: 6px;
+  padding-left: 8px;
+}

@@ -1,6 +1,6 @@
 import { Routes } from "@angular/router";
 import { AppComponent } from "./app.component";
-import { EditorComponent } from "./features/editor/editor/editor.component";
+import { EditorPaneComponent } from "./features/editor/editor-pane/editor-pane.component";
 export const routes: Routes = [
     {path: '', component: AppComponent}
 ];

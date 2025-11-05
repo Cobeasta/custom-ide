@@ -1,0 +1,16 @@
+.editor {
+  background-color: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+.editor-tabs {
+    flex: 0 0 32px;
+    border-bottom: var(--color-border);
+}
+.editor-pane {
+    flex: 1 1 auto;
+    overflow: auto;
+    background: var(--color-bg);
+}

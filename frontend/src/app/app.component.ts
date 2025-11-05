@@ -1,9 +1,9 @@
 import { Component } from "@angular/core";
 import { RouterOutlet } from "@angular/router";
 import { invoke } from "@tauri-apps/api/core";
-import { EditorComponent } from "./features/editor/editor/editor.component";
 import { ExplorerComponent } from "./features/explorer/explorer.component/explorer.component";
 import { Toolbar } from "./features/toolbar/toolbar/toolbar.component";
+import { EditorComponent } from "./features/editor/editor";
 @Component({
   selector: "app-root",
   imports: [EditorComponent, ExplorerComponent, Toolbar],

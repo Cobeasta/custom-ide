@@ -1,0 +1,9 @@
+<div class="editor-tabs">
+    <div class="tab"
+    *ngFor="let tab of editor.tabs$ | async; let i = index"
+    [class.active]="i === (editor.activeIndex$ | async)"
+    (click)="onSelectTab(i)"
+    >
+        <span class="tab-name">{{ tab.name }}{{ tab.isDirty ? ' *': '' }}</span>
+</div>
+</div>
