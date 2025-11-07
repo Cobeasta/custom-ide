@@ -1,0 +1,30 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* inherit from parent (editor-area) */
+  width: 100%;
+}
+.editor {
+  background-color: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+.editor-tabs {
+    flex: 0 0 32px;
+    border-bottom: var(--color-border);
+}
+.editor-pane {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    background: var(--color-bg);
+    flex-direction: column;
+}
+.hidden {
+  display: none;
+}
+.no-tabs {
+  color: var(--color-text-muted);
+}

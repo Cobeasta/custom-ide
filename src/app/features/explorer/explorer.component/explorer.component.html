@@ -1,0 +1,37 @@
+<div class="explorer">
+  <div class="explorer-header">
+    <span>Explorer</span>
+  </div>
+
+  <div class="explorer-content" *ngIf="state.rootFolder$ | async as root; else noFolder">
+    <!-- Just start recursion directly -->
+    <ng-container *ngTemplateOutlet="nodeTpl; context: { node: root, depth: 0 }"></ng-container>
+  </div>
+
+  <ng-template #noFolder>
+    <div class="explorer-content">
+      <p>No folder open</p>
+    </div>
+  </ng-template>
+</div>
+
+<!-- Recursive node template -->
+<ng-template #nodeTpl let-node="node" let-depth="depth">
+  <div class="node" [style.padding-left.px]="depth * 16">
+    <div class="node-header" (click)="toggle(node)" (dblclick)="open(node)">
+      <span *ngIf="node.isDir" class="icon">
+        {{ node.expanded ? '▼' : '▶' }}
+      </span>
+      <span class="folder-icon">
+        {{ node.isDir ? (node.isExpanded ? '📂' : '📁') : '📄' }}
+      </span>
+      {{ node.name }}
+    </div>
+
+    <div class="node-children" *ngIf="node.expanded && node.children">
+      <ng-container *ngFor="let child of node.children; trackBy: trackByPath">
+        <ng-container *ngTemplateOutlet="nodeTpl; context: { node: child, depth: depth + 1}"></ng-container>
+      </ng-container>
+    </div>
+  </div>
+</ng-template>
