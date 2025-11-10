@@ -1,18 +1,18 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "frontend",
+  "productName": "my-ide",
   "version": "0.1.0",
   "identifier": "my_ide",
   "build": {
     "beforeDevCommand": "npm run start",
     "devUrl": "http://localhost:1420",
     "beforeBuildCommand": "npm run build",
-    "frontendDist": "../dist/frontend/browser"
+    "frontendDist": "../dist/browser"
   },
   "app": {
     "windows": [
       {
-        "title": "frontend",
+        "title": "myide",
         "width": 800,
         "height": 600
       }

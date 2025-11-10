@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { EditorState } from '../../../core/services/editor-state';
 import { EditorTab } from '../../../core/models/editor-state.model';
 import { CommonModule } from '@angular/common';
+import { KeyboardShortcutService } from '../../../core/services/keyboard-shortcut.service';
 
 @Component({
   selector: 'app-editor-pane',
@@ -19,7 +20,7 @@ export class EditorPaneComponent implements AfterViewInit {
   private sub?: Subscription;
 
   private activeTab?: EditorTab;
-  constructor(public editorState: EditorState) { }
+  constructor(public editorState: EditorState, private shortcuts: KeyboardShortcutService) { }
   get hasActiveTab(): boolean {
     console.log(this.editorState.tabs.length);
     return this.editorState.tabs.length > 0;
@@ -103,10 +104,17 @@ export class EditorPaneComponent implements AfterViewInit {
     }
   };
 
+  ngOnInit() {
+    this.shortcuts.registerShortcut('ctrl+s', () => this.editorState.saveActiveTab(), 'editor');
+    this.shortcuts.registerShortcut('ctrl+w', () => this.editorState.closeActiveTab(), 'editor');
+  }
   ngOnDestroy() {
     this.sub?.unsubscribe();
     this.models.forEach(model => model.dispose());
     this.models.clear();
     console.log("editor pane component cleaned up");
+  }
+  activateScope() {
+    this.shortcuts.setScope('editor');
   }
 }

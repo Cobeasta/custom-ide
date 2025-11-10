@@ -1,29 +1,36 @@
-import { Component, HostListener} from "@angular/core";
+import { Component, HostListener } from "@angular/core";
 import { RouterOutlet } from "@angular/router";
 import { invoke } from "@tauri-apps/api/core";
 import { ExplorerComponent } from "./features/explorer/explorer.component/explorer.component";
 import { Toolbar } from "./features/toolbar/toolbar/toolbar.component";
 import { EditorComponent } from "./features/editor/editor";
+import { KeyboardShortcutService } from "./core/services/keyboard-shortcut.service";
+import { EditorState } from "./core/services/editor-state";
 @Component({
   selector: "app-root",
   imports: [EditorComponent, ExplorerComponent, Toolbar],
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.css",
 })
-export class AppComponent { 
+export class AppComponent {
   sidebarWidth = 250;
   dragging = false;
+
+  constructor(private shortcuts: KeyboardShortcutService, private editorState: EditorState) {}
+
   startDragging(event: MouseEvent) {
     this.dragging = true;
     console.log("dragging");
     event.preventDefault();
   }
+  ngOnInit() {
+  }
 
   onDrag(event: MouseEvent) {
     console.log("onDrag");
-    if(!this.dragging) return;
+    if (!this.dragging) return;
     const newWidth = event.clientX; // distance from left edge
-    if(newWidth > 100 && newWidth < 600) {
+    if (newWidth > 100 && newWidth < 600) {
       console.log("new width");
       this.sidebarWidth = newWidth;
     }
@@ -42,7 +49,7 @@ export class AppComponent {
   onKeydown(event: KeyboardEvent) {
     const isCtrlOrCmd = event.ctrlKey || event.metaKey;
     const key = event.key.toLocaleLowerCase();
-    if(isCtrlOrCmd && ['p', 's', 'r', 'o', 'n', 't'].includes(key)) {
+    if (isCtrlOrCmd && ['p', 's', 'r', 'o', 'n', 't'].includes(key)) {
       event.preventDefault();
       event.stopPropagation();
 

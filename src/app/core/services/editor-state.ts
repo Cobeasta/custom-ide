@@ -94,7 +94,9 @@ export class EditorState {
     this._activeIndex.next(index);
   }
   saveActiveTab() {
+    console.log("saveActiveTab()");
     const index = this._activeIndex.value ?? -1;
+    console.log(index);
     if (index < 0) {
       return;
     }
@@ -105,6 +107,7 @@ export class EditorState {
     this._tabs.next(updatedTabs);
   }
   async closeTab(i: number) {
+    console.log(`closeTab: ${i}`);
     let tab = this.tabs[i];
     if (tab.isDirty) {
       console.log("Dirty");
@@ -120,12 +123,25 @@ export class EditorState {
     let updatedTabs = [...this.tabs];
     updatedTabs.splice(i, 1);
     let newActive = this._activeIndex.value;
-    if (this.tabs.length === 0) newActive = null;
+    if (updatedTabs.length === 0) {
+      newActive = null;
+    }
     else if (newActive !== null && i <= newActive) {
-      newActive = Math.max(0, newActive - 1);
+       newActive = Math.max(0, newActive - 1);
     }
     this._tabs.next(updatedTabs);
     this._activeIndex.next(newActive);
+    console.log(`length: ${updatedTabs.length} value ${this.tabs.length === 0}`);
+    console.log("new active tab: " + newActive);
+  }
+  async closeActiveTab() {
+    console.log("closeActiveTab()");
+    let index = this._activeIndex.value ?? -1;
+    if(index < 0) {
+      console.log('no tabs open...');
+      return;
+    }
+    this.closeTab(index);
   }
 
 }
