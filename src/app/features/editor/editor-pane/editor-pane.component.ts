@@ -20,7 +20,7 @@ export class EditorPaneComponent implements AfterViewInit {
   editor!: monaco.editor.IStandaloneCodeEditor;
   private models = new Map<string, monaco.editor.ITextModel>();
   private sub?: Subscription;
-
+  private subFocus?: Subscription;
   private activeTab?: EditorTabModel;
   constructor(
     public editorService: EditorService,
@@ -84,6 +84,11 @@ export class EditorPaneComponent implements AfterViewInit {
 
       this.editor.onDidChangeModelContent(this.onModelContentChanged);
     });
+    this.subFocus =  this.editorService.focus$.subscribe((val) => {
+      if(val) {
+        this.editor.focus();
+      }
+    })
   }
   private getLanguageFromPath(path: string): string {
     if (path.endsWith('.ts')) return 'typescript';
@@ -123,5 +128,7 @@ export class EditorPaneComponent implements AfterViewInit {
   }
   activateScope() {
     this.shortcuts.setScope('editor');
+    this.editor.focus();
+
   }
 }

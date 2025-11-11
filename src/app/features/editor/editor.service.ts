@@ -15,6 +15,9 @@ export class EditorService {
 
     this.bus.on('file:open').subscribe(async ({ node }) => {
       await this.openFile(node);
+    });
+    this.bus.on('focus:editor').subscribe(async ( { }) => {
+      this.setFocus(true);
     })
   }
 
@@ -23,6 +26,9 @@ export class EditorService {
 
   private _activeIndex = new BehaviorSubject<number | null>(null);
   activeIndex$ = this._activeIndex.asObservable();
+
+  private _focus = new BehaviorSubject<boolean>(false);
+  focus$ = this._focus.asObservable();
 
   private _activeTab: EditorTabModel | null = null;
   activeTab$ = combineLatest<[EditorTabModel[], number | null]>([this.tabs$, this.activeIndex$]).pipe(
@@ -118,5 +124,8 @@ export class EditorService {
     if (val && val >= 0) {
       this.closeTab(val);
     }
+  }
+  setFocus(val: boolean) {
+    this._focus.next(val);
   }
 }

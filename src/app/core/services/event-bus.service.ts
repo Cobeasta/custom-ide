@@ -4,6 +4,7 @@ import { FileNode } from '../models/editor-state.model';
 
 export interface AppEvents {
   'file:open': { node: FileNode };
+  'focus:editor': { };
 }
 
 @Injectable({

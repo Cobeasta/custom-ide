@@ -6,6 +6,7 @@ import { Toolbar } from "./features/toolbar/toolbar/toolbar.component";
 import { EditorComponent } from "./features/editor/editor";
 import { KeyboardShortcutService } from "./core/services/keyboard-shortcut.service";
 import { EditorState } from "./core/services/editor-state";
+import { EventBusService } from "./core/services/event-bus.service";
 @Component({
   selector: "app-root",
   imports: [EditorComponent, ExplorerComponent, Toolbar],
@@ -16,7 +17,7 @@ export class AppComponent {
   sidebarWidth = 250;
   dragging = false;
 
-  constructor(private shortcuts: KeyboardShortcutService, private editorState: EditorState) {}
+  constructor(private shortcuts: KeyboardShortcutService, private editorState: EditorState, private bus: EventBusService) { }
 
   startDragging(event: MouseEvent) {
     this.dragging = true;
@@ -24,6 +25,7 @@ export class AppComponent {
     event.preventDefault();
   }
   ngOnInit() {
+    this.shortcuts.registerShortcut('ctrl+0', this.focusEditor.bind(this));
   }
 
   onDrag(event: MouseEvent) {
@@ -55,4 +57,10 @@ export class AppComponent {
 
     }
   }
+  focusEditor(): void {
+    this.shortcuts.setScope('editor');
+    this.bus.emit('focus:editor', {});
+  }
 }
+
+
