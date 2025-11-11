@@ -2,9 +2,11 @@ import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import * as monaco from 'monaco-editor';
 import { Subscription } from 'rxjs';
 import { EditorState } from '../../../core/services/editor-state';
-import { EditorTab } from '../../../core/models/editor-state.model';
 import { CommonModule } from '@angular/common';
 import { KeyboardShortcutService } from '../../../core/services/keyboard-shortcut.service';
+import { EditorService } from '../editor.service';
+import { EditorTabModel } from '../models/editor-tab-model';
+import { EventBusService } from '../../../core/services/event-bus.service';
 
 @Component({
   selector: 'app-editor-pane',
@@ -19,11 +21,15 @@ export class EditorPaneComponent implements AfterViewInit {
   private models = new Map<string, monaco.editor.ITextModel>();
   private sub?: Subscription;
 
-  private activeTab?: EditorTab;
-  constructor(public editorState: EditorState, private shortcuts: KeyboardShortcutService) { }
+  private activeTab?: EditorTabModel;
+  constructor(
+    public editorService: EditorService,
+    private shortcuts: KeyboardShortcutService,
+    private bus: EventBusService
+  ) { }
   get hasActiveTab(): boolean {
-    console.log(this.editorState.tabs.length);
-    return this.editorState.tabs.length > 0;
+    console.log(this.editorService.tabs.length);
+    return this.editorService.tabs.length > 0;
   }
   ngAfterViewInit() {
     monaco.editor.defineTheme('darkTealIndigo', {
@@ -59,17 +65,18 @@ export class EditorPaneComponent implements AfterViewInit {
       automaticLayout: true
     });
 
-    this.sub = this.editorState.activeTab$.subscribe((tab: EditorTab | null) => {
+    this.sub = this.editorService.activeTab$.subscribe((tab: EditorTabModel | null) => {
+      console.log('Active tab update');
       if (!tab) return;
       this.activeTab = tab;
-      let model = this.models.get(tab.path);
+      let model = this.models.get(tab.fileNode.path);
 
       if (!model) {
         model = monaco.editor.createModel(
           tab.content ?? '',
-          this.getLanguageFromPath(tab.path)
+          this.getLanguageFromPath(tab.fileNode.path)
         )
-        this.models.set(tab.path, model);
+        this.models.set(tab.fileNode.path, model);
       }
 
       console.log(`new model. content: ${tab.content}`);
@@ -96,17 +103,17 @@ export class EditorPaneComponent implements AfterViewInit {
   }
   onModelContentChanged = () => {
     const model = this.editor.getModel();
-    if(!model) return;
+    if (!model) return;
     const content = model.getValue();
-    if(this.activeTab) {
+    if (this.activeTab) {
       this.activeTab.content = content;
-      this.activeTab.isDirty = true;
+      this.activeTab.dirty = true;
     }
   };
 
   ngOnInit() {
-    this.shortcuts.registerShortcut('ctrl+s', () => this.editorState.saveActiveTab(), 'editor');
-    this.shortcuts.registerShortcut('ctrl+w', () => this.editorState.closeActiveTab(), 'editor');
+    this.shortcuts.registerShortcut('ctrl+s', () => this.editorService.saveActiveTab(), 'editor');
+    this.shortcuts.registerShortcut('ctrl+w', () => this.editorService.closeActiveTab(), 'editor');
   }
   ngOnDestroy() {
     this.sub?.unsubscribe();

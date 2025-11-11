@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { EditorState } from '../../../core/services/editor-state';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { FileNode } from '../../../core/models/editor-state.model';
+import { ExplorerService } from '../explorer.service';
+import { ExplorerNode } from '../models/file-node-model';
 @Component({
   selector: 'app-explorer',
   imports: [CommonModule],
@@ -10,32 +11,33 @@ import { FileNode } from '../../../core/models/editor-state.model';
   styleUrl: './explorer.component.css',
 })
 export class ExplorerComponent {
-  constructor(public state: EditorState) { }
+  constructor(public service: ExplorerService) { }
 
   private sub?: Subscription;
-  currentRoot?: FileNode | null;
+  currentRoot?: ExplorerNode | null;
   ngOnInit() {
-    this.sub = this.state.rootFolder$.subscribe((root) => {
+    this.sub = this.service.rootFolder$.subscribe((root) => {
       this.currentRoot = root;
-      console.log("explorer updated current root: ", this.currentRoot?.name);
+      console.log("explorer updated current root: ", this.currentRoot?.fileNode.name);
     });
   }
   ngOnDestroy() {
     this.sub?.unsubscribe();
   }
 
-  toggle(node: FileNode) {
-    if (node.isDir) {
-      this.state.toggleNode(node);
+  toggle(node: ExplorerNode) {
+    console.log(`toggle: ${node.fileNode.name} expanded: ${node.expanded}`)
+    if (node.fileNode.isDir) {
+      this.service.toggle(node);
     }
   }
-  open(node: FileNode) {
-    if(!node.isDir) {
-      this.state.openFile(node);
+  open(node: ExplorerNode) {
+    if(!node.fileNode.isDir) {
+      this.service.open(node);
     }
   }
 
-  trackByPath(index: number, item: FileNode) {
-    return item.path;
+  trackByPath(index: number, item: ExplorerNode) {
+    return item.fileNode.path;
   }
 }

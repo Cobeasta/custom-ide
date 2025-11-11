@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FileNode, FolderState } from '../models/editor-state.model';
+import { FileNode } from '../models/editor-state.model';
 import { join } from '@tauri-apps/api/path';
 import {invoke} from '@tauri-apps/api/core';
 @Injectable({
@@ -18,7 +18,6 @@ export class FileioService {
       name: entry.name,
       path: entry.path,
       isDir: entry.is_dir,
-      expanded: false,
       children: entry.is_dir ? [] : undefined,
     }));
   }

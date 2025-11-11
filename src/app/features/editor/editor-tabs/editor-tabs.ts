@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { EditorState } from '../../../core/services/editor-state';
 import { AsyncPipe, NgIf, NgFor } from '@angular/common';
+import { EditorService } from '../editor.service';
 @Component({
   selector: 'app-editor-tabs',
   imports: [NgIf, NgFor, AsyncPipe],
@@ -9,12 +10,12 @@ import { AsyncPipe, NgIf, NgFor } from '@angular/common';
   standalone: true
 })
 export class EditorTabs {
-  constructor(public editor: EditorState) {}
+  constructor(public editorService: EditorService) {}
 
   onSelectTab(i: number) {
-    this.editor.setActiveTab(i);
+    this.editorService.setActiveTab(i);
   }
   onCloseTab(i: number, event: MouseEvent) {
-   this.editor.closeTab(i); 
+   this.editorService.closeTab(i); 
   }
 }

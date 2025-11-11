@@ -1,11 +1,11 @@
 <div class="editor-tabs">
     <div class="tab"
-    *ngFor="let tab of editor.tabs$ | async; let i = index"
-    [class.active]="i === (editor.activeIndex$ | async)"
+    *ngFor="let tab of editorService.tabs$ | async; let i = index"
+    [class.active]="i === (editorService.activeIndex$ | async)"
     (click)="onSelectTab(i)"
     >
         <span class="tab-name">{{ tab.name }}</span>
-        <span *ngIf="tab.isDirty" class="tab-dirty"> *</span>
+        <span *ngIf="tab.dirty" class="tab-dirty"> *</span>
         <button
             class="tab-close"
             (click)="onCloseTab(i, $event)"

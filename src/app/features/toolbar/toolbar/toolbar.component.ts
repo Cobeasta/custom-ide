@@ -30,6 +30,6 @@ export class Toolbar {
   }
   async save(event?: MouseEvent) {
     this.showFileMenu = false;
-    this.state.saveActiveTab();
+    // this.state.saveActiveTab();
   }
 }

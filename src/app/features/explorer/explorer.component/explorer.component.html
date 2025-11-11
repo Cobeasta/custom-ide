@@ -1,9 +1,9 @@
-<div class="explorer">
+<div class="explorer" focus-scope="explorer">
   <div class="explorer-header">
     <span>Explorer</span>
   </div>
 
-  <div class="explorer-content" *ngIf="state.rootFolder$ | async as root; else noFolder">
+  <div class="explorer-content" *ngIf="service.rootFolder$ | async as root; else noFolder">
     <!-- Just start recursion directly -->
     <ng-container *ngTemplateOutlet="nodeTpl; context: { node: root, depth: 0 }"></ng-container>
   </div>
@@ -19,13 +19,13 @@
 <ng-template #nodeTpl let-node="node" let-depth="depth">
   <div class="node" [style.padding-left.px]="depth * 16">
     <div class="node-header" (click)="toggle(node)" (dblclick)="open(node)">
-      <span *ngIf="node.isDir" class="icon">
+      <span *ngIf="node.fileNode.isDir" class="icon">
         {{ node.expanded ? '▼' : '▶' }}
       </span>
       <span class="folder-icon">
-        {{ node.isDir ? (node.isExpanded ? '📂' : '📁') : '📄' }}
+        {{ node.fileNode.isDir ? (node.isExpanded ? '📂' : '📁') : '📄' }}
       </span>
-      {{ node.name }}
+      {{ node.fileNode.name }}
     </div>
 
     <div class="node-children" *ngIf="node.expanded && node.children">
